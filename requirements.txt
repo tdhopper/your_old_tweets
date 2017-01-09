@@ -1,0 +1,2 @@
+python-twitter
+python-dateutil
