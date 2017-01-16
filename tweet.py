@@ -38,7 +38,9 @@ def get_followers(api):
 def make_tweet(follower):
     base = "https://twitter.com/search?"
     date_list = " OR ".join(dates())
-    encoded = urllib.urlencode({"q": "from:{} ({})".format(follower.screen_name, date_list)})
+    encoded = urllib.urlencode({"f": "tweets",
+                                "vertical": "default",
+                                "q": "from:{} ({})".format(follower.screen_name, date_list)})
     return "@{}: {}{}".format(follower.screen_name, base, encoded)
 
 
