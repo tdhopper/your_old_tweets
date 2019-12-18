@@ -18,7 +18,7 @@ provider:
 
 functions:
   hello:
-    handler: tweet.tweet
+    handler: tweet.send_tweet
 
     events:
       - schedule: cron(0 1 * * ? *)
