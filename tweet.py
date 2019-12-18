@@ -52,14 +52,6 @@ def make_tweet(follower):
     return "@{}: {}{}".format(follower.screen_name, base, encoded)
 
 
-def go_time(follower, event_time):
-    try:
-        return -follower.utc_offset / 3600 + 5 == event_time
-    except:
-        logger.error("Error computing go time for user %s", follower)
-        return False
-
-
 def send_tweet(event, context):
     """Post tweet"""
     api = get_api()
