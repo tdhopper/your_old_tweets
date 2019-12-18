@@ -82,4 +82,4 @@ def send_tweet(event, context):
 
 
 if __name__ == "__main__":
-    print send_tweet(None, None)
+    send_tweet(None, None)
