@@ -18,7 +18,7 @@ def yearsago(years, from_date=None):
 
 
 def dates(n=12):
-    for i in range(1, n+1):
+    for i in range(1, n + 1):
         d1 = yearsago(i).strftime("%Y-%m-%d")
         d2 = (yearsago(i) + dt.timedelta(days=1)).strftime("%Y-%m-%d")
         yield "(since:{} until:{})".format(d1, d2)
@@ -38,15 +38,19 @@ def get_followers(api):
 def make_tweet(follower):
     base = "https://twitter.com/search?"
     date_list = " OR ".join(dates())
-    encoded = urllib.urlencode({"f": "tweets",
-                                "vertical": "default",
-                                "q": "from:{} ({})".format(follower.screen_name, date_list)})
+    encoded = urllib.urlencode(
+        {
+            "f": "tweets",
+            "vertical": "default",
+            "q": "from:{} ({})".format(follower.screen_name, date_list),
+        }
+    )
     return "@{}: {}{}".format(follower.screen_name, base, encoded)
 
 
 def go_time(follower, event_time):
     try:
-        return -follower.utc_offset/3600 + 5 == event_time
+        return -follower.utc_offset / 3600 + 5 == event_time
     except:
         logger.error("Error computing go time for user %s", follower)
         return False
@@ -54,21 +58,28 @@ def go_time(follower, event_time):
 
 def send_tweet(event, context):
     """Post tweet"""
-    event_time = (event or {}).get('time', '2017-01-09T00:00:00Z')
-    event_hour = (dt.datetime
-                  .strptime(event_time, "%Y-%m-%dT%H:%M:%SZ")
-                  .hour)
+    event_time = (event or {}).get("time", "2017-01-09T00:00:00Z")
+    event_hour = dt.datetime.strptime(event_time, "%Y-%m-%dT%H:%M:%SZ").hour
     api = get_api()
     for f in get_followers(api):
         if not go_time(f, event_hour):
-            logger.debug("Not go time for %s %s with offset of %s",
-                         f.screen_name, f.id, f.utc_offset)
+            logger.debug(
+                "Not go time for %s %s with offset of %s",
+                f.screen_name,
+                f.id,
+                f.utc_offset,
+            )
             continue
-        logger.debug("Sending tweet for %s, %s with offset of %s",
-                     f.screen_name, f.id, f.utc_offset)
+        logger.debug(
+            "Sending tweet for %s, %s with offset of %s",
+            f.screen_name,
+            f.id,
+            f.utc_offset,
+        )
 
         update = make_tweet(f)
         api.PostUpdate(update, verify_status_length=False)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     print send_tweet(None, None)

@@ -1,24 +1,11 @@
-define JSON_BODY
-{
-  "consumer_key": "CONSUMER KEY",
-  "consumer_secret": "CONSUMER SECRET",
-  "access_token_key": "ACCESS TOKEN KEY",
-  "access_token_secret": "ACCESS TOKEN SECRET"
-}
-endef
+all: deploy
 
+.PHONY: deploy
+deploy:
+	STATIC_DEPS=true pip3 install -U "python-twitter<4"
+	rm -rf concurrent/futures
+	serverless deploy
 
-dependencies:
-	STATIC_DEPS=true pip install -Ur requirements.txt -t .
-
-prepare: dependencies
-	rm -f lambda_bundle.zip
-	zip -r lambda_bundle *
-	make clean
-
+.PHONY: clean
 clean:
 	git clean -fd
-
-export JSON_BODY
-credentials_file:
-	@echo "$$JSON_BODY" > twitter_credentials.json
