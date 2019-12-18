@@ -2,7 +2,7 @@ all: deploy
 
 .PHONY: deploy
 deploy:
-	STATIC_DEPS=true pip3 install -U "python-twitter<4" "python-dateutil"
+	STATIC_DEPS=true pip3 install -U "python-twitter<4" "python-dateutil" -t .
 	rm -rf concurrent/futures
 	serverless deploy
 
