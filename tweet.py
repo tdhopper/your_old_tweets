@@ -1,7 +1,7 @@
 import twitter as tw
 import datetime as dt
-import urllib
-import json
+from urllib.parse import urlencode
+import os
 import logging
 
 from dateutil.relativedelta import relativedelta
@@ -25,8 +25,12 @@ def dates(n=12):
 
 
 def get_api():
-    with open("twitter_credentials.json", "r") as f:
-        credentials = json.load(f)
+    credentials = {
+        "consumer_key": os.environ["CONSUMER_KEY"].strip(),
+        "consumer_secret": os.environ["CONSUMER_SECRET"].strip(),
+        "access_token_key": os.environ["TOKEN"].strip(),
+        "access_token_secret": os.environ["TOKEN_SECRET"].strip(),
+    }
     return tw.Api(**credentials)
 
 
@@ -38,7 +42,7 @@ def get_followers(api):
 def make_tweet(follower):
     base = "https://twitter.com/search?"
     date_list = " OR ".join(dates())
-    encoded = urllib.urlencode(
+    encoded = urlencode(
         {
             "f": "tweets",
             "vertical": "default",
@@ -58,25 +62,8 @@ def go_time(follower, event_time):
 
 def send_tweet(event, context):
     """Post tweet"""
-    event_time = (event or {}).get("time", "2017-01-09T00:00:00Z")
-    event_hour = dt.datetime.strptime(event_time, "%Y-%m-%dT%H:%M:%SZ").hour
     api = get_api()
     for f in get_followers(api):
-        if not go_time(f, event_hour):
-            logger.debug(
-                "Not go time for %s %s with offset of %s",
-                f.screen_name,
-                f.id,
-                f.utc_offset,
-            )
-            continue
-        logger.debug(
-            "Sending tweet for %s, %s with offset of %s",
-            f.screen_name,
-            f.id,
-            f.utc_offset,
-        )
-
         update = make_tweet(f)
         api.PostUpdate(update, verify_status_length=False)
 
