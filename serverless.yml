@@ -4,7 +4,7 @@ service: youroldtweets
 provider:
   name: aws
   runtime: python3.8
-  timeout: 15
+  timeout: 300
 
 # you can overwrite defaults here
   stage: prod
