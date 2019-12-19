@@ -57,7 +57,10 @@ def send_tweet(event, context):
     api = get_api()
     for f in get_followers(api):
         update = make_tweet(f)
-        api.PostUpdate(update, verify_status_length=False)
+        try:
+            api.PostUpdate(update, verify_status_length=False)
+        except:
+            pass
 
 
 if __name__ == "__main__":
