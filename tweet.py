@@ -49,7 +49,9 @@ def make_tweet(follower):
             "q": "from:{} ({})".format(follower.screen_name, date_list),
         }
     )
-    return "@{}: {}{}".format(follower.screen_name, base, encoded)
+    return f"""@{follower.screen_name}: 🌟 Here are your tweets from {dt.date.today().strftime("%b %d")} {base}{encoded}
+
+If you enjoy @your_old_tweets, please tell a friend."""
 
 
 def send_tweet(event, context):
