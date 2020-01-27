@@ -54,10 +54,10 @@ def make_tweet(screen_name):
 If you enjoy @your_old_tweets, please tell a friend."""
 
 
-def send_tweet(event, context):
+def send_all_tweets(event, context):
     """Post tweet"""
     api = get_api()
-    for f in get_followers(api):
+    for f in event.get("handles") or get_followers(api):
         update = make_tweet(f.screen_name)
         try:
             api.PostUpdate(update, verify_status_length=False)
@@ -66,4 +66,4 @@ def send_tweet(event, context):
 
 
 if __name__ == "__main__":
-    send_tweet(None, None)
+    send_all_tweets(None, None)
