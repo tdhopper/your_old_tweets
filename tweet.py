@@ -49,16 +49,19 @@ def make_tweet(screen_name):
             "q": "from:{} ({})".format(screen_name, date_list),
         }
     )
-    return f"""@{screen_name}: 🌟 Here are your tweets from {dt.date.today().strftime("%b %d")} {base}{encoded}
+    return f"""@{screen_name}: Here are your tweets from {dt.date.today().strftime("%b %d")} {base}{encoded}
 
-If you enjoy @your_old_tweets, please tell a friend."""
+If you enjoy @your_old_tweets, please tell a friend.
+
+➰"""
 
 
 def send_all_tweets(event, context):
     """Post tweet"""
     api = get_api()
-    for f in event.get("handles") or get_followers(api):
-        update = make_tweet(f.screen_name)
+    my_followers = [f.screen_name for f in get_followers(api)]
+    for f in event.get("handles") or my_followers:
+        update = make_tweet(f)
         try:
             api.PostUpdate(update, verify_status_length=False)
         except:
