@@ -1,4 +1,0 @@
-name: youroldtweets
-dependencies:
-  - python=2.7
-  - pip
