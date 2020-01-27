@@ -39,17 +39,17 @@ def get_followers(api):
         yield f
 
 
-def make_tweet(follower):
+def make_tweet(screen_name):
     base = "https://twitter.com/search?"
     date_list = " OR ".join(dates())
     encoded = urlencode(
         {
             "f": "tweets",
             "vertical": "default",
-            "q": "from:{} ({})".format(follower.screen_name, date_list),
+            "q": "from:{} ({})".format(screen_name, date_list),
         }
     )
-    return f"""@{follower.screen_name}: 🌟 Here are your tweets from {dt.date.today().strftime("%b %d")} {base}{encoded}
+    return f"""@{screen_name}: 🌟 Here are your tweets from {dt.date.today().strftime("%b %d")} {base}{encoded}
 
 If you enjoy @your_old_tweets, please tell a friend."""
 
@@ -58,7 +58,7 @@ def send_tweet(event, context):
     """Post tweet"""
     api = get_api()
     for f in get_followers(api):
-        update = make_tweet(f)
+        update = make_tweet(f.screen_name)
         try:
             api.PostUpdate(update, verify_status_length=False)
         except:
