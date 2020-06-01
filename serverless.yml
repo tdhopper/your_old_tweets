@@ -88,7 +88,7 @@ functions:
       - schedule:
           rate: cron(0 16 * * ? *)
           input:
-            startswith: ["q"]
+            startswith: ["q", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
       - schedule:
           rate: cron(0 17 * * ? *)
           input:
