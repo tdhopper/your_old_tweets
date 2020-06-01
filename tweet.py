@@ -59,7 +59,9 @@ If you enjoy @your_old_tweets, please tell a friend.
 def send_all_tweets(event, context):
     """Post tweet"""
     api = get_api()
-    startswith = tuple(event.get("startswith", "0"))
+    startswith = event.get("startswith", "0")
+    if isinstance(startswith, list):
+        startswith = tuple(startswith)
     my_followers = [f.screen_name for f in get_followers(api)
                     if f.screen_name.lower().startswith(startswith)]
     print(f"Found {len(my_followers)} with prefix {startswith}.")
