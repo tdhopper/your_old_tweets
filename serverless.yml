@@ -21,6 +21,99 @@ functions:
     handler: tweet.send_all_tweets
 
     events:
-      - schedule: cron(0 1 * * ? *)
-
-
+      - schedule:
+          rate: cron(0 0 * * ? *)
+          input:
+            starts_with: ["a"]
+      - schedule:
+          rate: cron(0 1 * * ? *)
+          input:
+            starts_with: ["b"]
+      - schedule:
+          rate: cron(0 2 * * ? *)
+          input:
+            starts_with: ["c"]
+      - schedule:
+          rate: cron(0 3 * * ? *)
+          input:
+            starts_with: ["d"]
+      - schedule:
+          rate: cron(0 4 * * ? *)
+          input:
+            starts_with: ["e"]
+      - schedule:
+          rate: cron(0 5 * * ? *)
+          input:
+            starts_with: ["f"]
+      - schedule:
+          rate: cron(0 6 * * ? *)
+          input:
+            starts_with: ["g"]
+      - schedule:
+          rate: cron(0 7 * * ? *)
+          input:
+            starts_with: ["h"]
+      - schedule:
+          rate: cron(0 8 * * ? *)
+          input:
+            starts_with: ["i"]
+      - schedule:
+          rate: cron(0 9 * * ? *)
+          input:
+            starts_with: ["j"]
+      - schedule:
+          rate: cron(0 10 * * ? *)
+          input:
+            starts_with: ["k"]
+      - schedule:
+          rate: cron(0 11 * * ? *)
+          input:
+            starts_with: ["l"]
+      - schedule:
+          rate: cron(0 12 * * ? *)
+          input:
+            starts_with: ["m"]
+      - schedule:
+          rate: cron(0 13 * * ? *)
+          input:
+            starts_with: ["n"]
+      - schedule:
+          rate: cron(0 14 * * ? *)
+          input:
+            starts_with: ["o"]
+      - schedule:
+          rate: cron(0 15 * * ? *)
+          input:
+            starts_with: ["p"]
+      - schedule:
+          rate: cron(0 16 * * ? *)
+          input:
+            starts_with: ["q"]
+      - schedule:
+          rate: cron(0 17 * * ? *)
+          input:
+            starts_with: ["r"]
+      - schedule:
+          rate: cron(0 18 * * ? *)
+          input:
+            starts_with: ["s"]
+      - schedule:
+          rate: cron(0 19 * * ? *)
+          input:
+            starts_with: ["t"]
+      - schedule:
+          rate: cron(0 20 * * ? *)
+          input:
+            starts_with: ["u"]
+      - schedule:
+          rate: cron(0 21 * * ? *)
+          input:
+            starts_with: ["v"]
+      - schedule:
+          rate: cron(0 22 * * ? *)
+          input:
+            starts_with: ["w", "_"]
+      - schedule:
+          rate: cron(0 23 * * ? *)
+          input:
+            starts_with: ["x", "z"]
