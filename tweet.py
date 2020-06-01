@@ -62,10 +62,12 @@ def send_all_tweets(event, context):
     startswith = tuple(event.get("startswith", "0"))
     my_followers = [f.screen_name for f in get_followers(api)
                     if f.screen_name.lower().startswith(startswith)]
-    for f in event.get("handles") or my_followers:
+    print(f"Found {len(my_followers} with prefix {startswith}.")
+    for f in my_followers:
         update = make_tweet(f)
         try:
             api.PostUpdate(update, verify_status_length=False)
+            print(f"Updated {f.screen_name}")
         except:
             pass
 
