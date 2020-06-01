@@ -59,7 +59,9 @@ If you enjoy @your_old_tweets, please tell a friend.
 def send_all_tweets(event, context):
     """Post tweet"""
     api = get_api()
-    my_followers = [f.screen_name for f in get_followers(api)]
+    startswith = event.get("startswith", "0")
+    my_followers = [f.screen_name for f in get_followers(api)
+                    if f.screen_name.startswith(startswith)]
     for f in event.get("handles") or my_followers:
         update = make_tweet(f)
         try:
